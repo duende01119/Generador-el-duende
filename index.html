@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Generador El DUENDE</title>
+
+<style>
+html, body {
+    margin:0;
+    padding:0;
+    height:100%;
+    width:100%;
+    overflow-x:hidden;
+    font-family: Arial, sans-serif;
+    text-align:center;
+    background: linear-gradient(135deg,#000000,#050505,#0a0a0a);
+    color:white;
+}
+
+body{
+    padding-top:20px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:flex-start;
+}
+
+h1{
+    font-size:28px;
+    color:gold;
+    text-shadow: 2px 2px 8px green, 0 0 15px yellow;
+    margin-bottom:15px;
+}
+
+label{
+    display:block;
+    font-weight:bold;
+    margin-bottom:5px;
+    font-size:16px;
+}
+
+input{
+    font-size:20px;
+    padding:8px;
+    width:140px;
+    text-align:center;
+    border-radius:8px;
+    border:none;
+}
+
+button{
+    margin-top:10px;
+    padding:10px 25px;
+    font-size:18px;
+    border:none;
+    border-radius:12px;
+    background:linear-gradient(45deg,gold,orange);
+    color:black;
+    font-weight:bold;
+    cursor:pointer;
+    box-shadow:0 0 15px gold;
+    transition: all 0.3s ease-in-out;
+}
+
+button:hover{
+    transform:scale(1.05);
+    box-shadow:0 0 25px gold;
+}
+
+.resultado{
+    margin-top:15px;
+    font-size:18px;
+    line-height:1.6;
+}
+
+.base{
+    font-size:24px;
+    font-weight:bold;
+    background:linear-gradient(45deg,gold,orange);
+    color:black;
+    display:inline-block;
+    padding:8px 16px;
+    border-radius:12px;
+    box-shadow:0 0 20px gold;
+    animation: brillo 1s infinite alternate;
+}
+
+@keyframes brillo {
+  from { text-shadow: 0 0 8px gold, 0 0 15px orange; }
+  to { text-shadow: 0 0 20px gold, 0 0 25px orange; }
+}
+
+/* MARCO MÁGICO */
+.marco{
+    display:inline-block;
+    padding:20px;
+    border:4px solid gold;
+    border-radius:15px;
+    box-shadow: 0 0 15px gold, 0 0 25px orange, 0 0 40px yellow;
+    animation: destellos 2s infinite alternate;
+    background: rgba(0,0,0,0.3);
+    margin-top:15px;
+    max-width:90%;
+}
+
+@keyframes destellos {
+    0% { box-shadow: 0 0 15px gold, 0 0 25px orange, 0 0 40px yellow; }
+    50% { box-shadow: 0 0 20px gold, 0 0 30px orange, 0 0 50px yellow; }
+    100% { box-shadow: 0 0 15px gold, 0 0 25px orange, 0 0 40px yellow; }
+}
+
+#generador{
+    display:none; /* Oculto hasta clave correcta */
+}
+
+#toggleClave{
+    cursor:pointer;
+    font-size:18px;
+    margin-left:8px;
+}
+
+footer{
+    margin-top:10px;
+    font-size:12px;
+    opacity:0.7;
+}
+</style>
+</head>
+<body>
+
+<h1>Generador <br>🍀$ El DUENDE $ 🍀</h1>
+
+<!-- Mensaje de bienvenida en la pantalla inicial -->
+<div id="mensajeBienvenida" style="font-size:18px; color:lime; margin-bottom:15px;">
+¡Bienvenido al Generador VIP El DUENDE! 🍀✨
+</div>
+
+<!-- Acceso por clave -->
+<div id="acceso">
+    <label for="clave">Ingrese su clave</label>
+    <input type="password" id="clave" placeholder="Clave secreta">
+    <span id="toggleClave" onclick="verClave()">👁️</span>
+    <br>
+    <button onclick="verificarClave()">INGRESAR</button>
+</div>
+
+<!-- Generador oculto dentro de marco mágico -->
+<div class="marco" id="generador">
+    <label for="numero">Ingrese su número aquí</label>
+    <input type="text" id="numero" maxlength="4" placeholder="Ej: 5392">
+    <br>
+    <button onclick="duendiar()">PLAY 🍀</button>
+    <button onclick="mostrarInstrucciones()">Instrucciones 📖</button>
+    <div class="resultado" id="salida"></div>
+</div>
+
+<footer>by Lokomay®</footer>
+
+<script>
+// Clave de prueba
+const CLAVE_CORRECTA = "duende123";
+
+// Alternar mostrar/ocultar clave
+function verClave(){
+    const input = document.getElementById("clave");
+    input.type = (input.type === "password") ? "text" : "password";
+}
+
+// Verificar clave
+function verificarClave(){
+    let valor = document.getElementById("clave").value;
+    if(valor === CLAVE_CORRECTA){
+        document.getElementById("acceso").style.display = "none";
+        document.getElementById("generador").style.display = "block";
+    }else{
+        alert("Clave incorrecta 🔒");
+    }
+}
+
+// Mostrar instrucciones
+function mostrarInstrucciones(){
+    alert(
+`1️⃣ Ingrese un número de 4 cifras.
+2️⃣ Presione PLAY 🍀 para generar los resultados.
+3️⃣ El primer número es 'A la cabeza' y los tres siguientes son para cubrir el tiket.
+4️⃣ Cada número viene acompañado de su emoji simbólico.
+5️⃣ ¡Diviértase y buena suerte!`
+    );
+}
+
+// Emojis
+function emojiQuiniela(num){
+  const tabla = {
+    "00":"🥚🥚","01":"💧","02":"👶","03":"🎩","04":"🛏","05":"🐱","06":"🐶","07":"🔫","08":"🔥","09":"🌊",
+    "10":"💣","11":"⛏","12":"🪖","13":"🍀❌","14":"🍺","15":"👑","16":"💍","17":"⚠️","18":"🩸","19":"🐟",
+    "20":"🎉","21":"👩","22":"🤪","23":"👨‍🍳","24":"🐎","25":"🐔","26":"⛪","27":"🪮","28":"⛰","29":"🗝",
+    "30":"🌹","31":"💡","32":"💰","33":"✝️","34":"🧠","35":"🐦","36":"🌰","37":"🦷","38":"🪨","39":"🌧",
+    "40":"🙏","41":"🔪","42":"👟","43":"🏠","44":"🚔","45":"🍷","46":"🍅","47":"⚰️","48":"🗣⚰️","49":"🥩",
+    "50":"🍞","51":"🪚","52":"👩‍👦","53":"🚢","54":"🐄","55":"🎵","56":"💥","57":"🧟","58":"🌊⚰️","59":"🌿",
+    "60":"🙏✨","61":"🔫🔫","62":"🌊🌊","63":"💒","64":"😭","65":"🏹","66":"🪱","67":"🦷❗","68":"👶👶","69":"🍷🔥",
+    "70":"😴⚰️","71":"💩","72":"😲","73":"🏥","74":"🧑🏿","75":"💋","76":"🔥🔥","77":"🦵","78":"💃","79":"🕵️",
+    "80":"🎱","81":"🌸","82":"🥊","83":"⛈","84":"⛪","85":"🔦","86":"💨","87":"🐜","88":"👴","89":"🐀",
+    "90":"😨","91":"🚽","92":"👨‍⚕️","93":"❤️","94":"⚰️🌹","95":"👓","96":"👨","97":"🪑","98":"🧺","99":"👬"
+  };
+  return tabla[num] ? tabla[num] : "✨";
+}
+
+// Animación tragamonedas
+function animarResultado(element, valorFinal){
+  let i=0;
+  let interval = setInterval(()=>{
+    element.innerText = Math.floor(Math.random()*100).toString().padStart(2,'0');
+    i++;
+    if(i>15){
+      clearInterval(interval);
+      element.innerText = valorFinal;
+    }
+  },50);
+}
+
+// Generador
+function duendiar(){
+  let num=document.getElementById("numero").value;
+  if(num.length!==4 || isNaN(num)){
+    alert("Ingresá un número de 4 cifras");
+    return;
+  }
+
+  let d1=parseInt(num[0]), d2=parseInt(num[1]), d3=parseInt(num[2]), d4=parseInt(num[3]);
+  let par1=d1+d2, par2=d3+d4;
+  let r1=par1<10?"0"+par1:par1.toString();
+  let r2=par2<10?"0"+par2:par2.toString();
+  let combinado=r1+r2;
+  let s1=(parseInt(combinado[0])+d1)%10;
+  let s2=(parseInt(combinado[1])+d2)%10;
+  let s3=(parseInt(combinado[2])+d3)%10;
+  let s4=(parseInt(combinado[3])+d4)%10;
+  let final1=(s1+s3)%10;
+  let final2=(s2+s4)%10;
+  let cabeza=""+final1+final2;
+
+  let mas1=(parseInt(cabeza)+1)%100; if(mas1<10) mas1="0"+mas1;
+  let menos5=(parseInt(cabeza)-5); if(menos5<0) menos5+=100; if(menos5<10) menos5="0"+menos5;
+  let invertido=cabeza[1]+cabeza[0];
+
+  let salidaDiv=document.getElementById("salida");
+  salidaDiv.innerHTML=
+    "<p style='font-size:20px; font-weight:bold; margin-bottom:10px;'>A la cabeza</p>"+
+    "<div class='base' id='cabezaSpan'>"+emojiQuiniela(cabeza)+" "+cabeza+"</div>"+
+    "<p style='margin-top:10px;'>Para cubrir el tiket:</p>"+
+    "<div id='restantesDiv'>"+emojiQuiniela(mas1)+" "+mas1+" | "+emojiQuiniela(menos5)+" "+menos5+" | "+emojiQuiniela(invertido)+" "+invertido+"</div>";
+
+  animarResultado(document.getElementById("cabezaSpan"), emojiQuiniela(cabeza)+" "+cabeza);
+  animarResultado(document.getElementById("restantesDiv"), emojiQuiniela(mas1)+" "+mas1+" | "+emojiQuiniela(menos5)+" "+menos5+" | "+emojiQuiniela(invertido)+" "+invertido);
+}
+</script>
+
+</body>
+</html>
